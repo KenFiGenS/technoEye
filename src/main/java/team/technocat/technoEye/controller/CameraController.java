@@ -3,8 +3,6 @@ package team.technocat.technoEye.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.technocat.technoEye.dto.CameraDto;
 import team.technocat.technoEye.dto.CameraDtoForCreate;
-import team.technocat.technoEye.model.Camera;
 import team.technocat.technoEye.service.CameraService;
 
 import javax.sql.DataSource;
@@ -60,7 +57,9 @@ public class CameraController {
     public String check() throws SQLException {
         log.info("Ендпоинт проверки соединения в БД");
         try (Connection conn = dataSource.getConnection()) {
-            return "DB connection OK!";
+            throw new RuntimeException();
+        } finally {
+            return "1";
         }
     }
 }

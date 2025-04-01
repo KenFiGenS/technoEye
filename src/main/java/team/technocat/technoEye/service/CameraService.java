@@ -2,12 +2,14 @@ package team.technocat.technoEye.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import team.technocat.technoEye.dto.CameraDto;
 import team.technocat.technoEye.dto.CameraDtoForCreate;
 import team.technocat.technoEye.model.Camera;
 import team.technocat.technoEye.repository.CameraRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
