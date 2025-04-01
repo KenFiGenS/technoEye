@@ -19,4 +19,6 @@ public class CameraDtoForCreate {
     @NonNull
     @Length(min = 1, max = 150)
     private String location;
+    @NonNull
+    private String userId;
 }

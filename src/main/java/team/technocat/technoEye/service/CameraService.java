@@ -2,14 +2,12 @@ package team.technocat.technoEye.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import team.technocat.technoEye.dto.CameraDto;
 import team.technocat.technoEye.dto.CameraDtoForCreate;
 import team.technocat.technoEye.model.Camera;
 import team.technocat.technoEye.repository.CameraRepository;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +24,8 @@ public class CameraService {
         return savedCamera;
     }
 
-    public List<CameraDto> getAllCameras() {
-        List<Camera> cameras = cameraRepository.findAll();
+    public List<CameraDto> getAllCameras(String userId) {
+        List<Camera> cameras = cameraRepository.findAllByUserId(userId);
         return getCamerasDto(cameras);
     }
 
@@ -43,15 +41,16 @@ public class CameraService {
         return getCamerasDto(cameras);
     }
 
-    public CameraDto updateCamera(CameraDto cameraDto) {
-        Camera camera = cameraRepository.findById(cameraDto.getId()).orElseThrow(() -> new RuntimeException("Камера не найдена"));
+    public CameraDto updateCamera(String userId, CameraDto cameraDto) {
+        Camera camera = cameraRepository.findByIdAndUserId(cameraDto.getId(), userId).orElseThrow(() -> new RuntimeException("Камера не найдена у данного пользователя"));
 
         Camera updatedCamera = new Camera(
                 cameraDto.getId(),
                 cameraDto.getName() == null ? camera.getName() : cameraDto.getName(),
                 cameraDto.getUrl() == null ? camera.getUrl(): cameraDto.getUrl(),
                 cameraDto.getIsActive() == null ? camera.isActive() : cameraDto.getIsActive(),
-                cameraDto.getLocation() == null ? camera.getLocation() : cameraDto.getLocation()
+                cameraDto.getLocation() == null ? camera.getLocation() : cameraDto.getLocation(),
+                camera.getUserId()
         );
 
         CameraDto updatedCameraDto = new CameraDto();
@@ -59,8 +58,8 @@ public class CameraService {
         return updatedCameraDto;
     }
 
-    public CameraDto findCameraById(long id) {
-        Camera camera = cameraRepository.findById(id).orElseThrow(() -> new RuntimeException("Камера не найдена"));
+    public CameraDto findCameraById(String userId, long id) {
+        Camera camera = cameraRepository.findByIdAndUserId(id, userId).orElseThrow(() -> new RuntimeException("Камера не найдена"));
         CameraDto cameraDto = new CameraDto();
         BeanUtils.copyProperties(camera, cameraDto);
         return cameraDto;

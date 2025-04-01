@@ -19,4 +19,5 @@ public class CameraDto {
     private Boolean isActive;
     @Length(min = 1, max = 150)
     private String location;
+    private String userId;
 }

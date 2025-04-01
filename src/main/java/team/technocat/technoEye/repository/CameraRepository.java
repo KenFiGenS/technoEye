@@ -9,7 +9,11 @@ import java.util.Optional;
 
 @Repository
 public interface CameraRepository extends JpaRepository<Camera, Long> {
+    List<Camera> findAllByUserId(String userId);
 
     List<Camera> findByIsActive(boolean isActive);
+
     Optional<Camera> findByUrl(String url);
+
+    Optional<Camera> findByIdAndUserId(long id, String userId);
 }
