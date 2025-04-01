@@ -1,6 +1,5 @@
 package team.technocat.technoEye.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +19,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cameras")
-@RequiredArgsConstructor
 public class CameraController {
-    @Autowired
     private CameraService cameraService;
     @Autowired
     private DataSource dataSource;
 
     @GetMapping
     public ResponseEntity<List<Camera>> getAllCameras() {
-        return new ResponseEntity<>(cameraService.getActiveCameras(), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>(cameraService.getAllCameras(), HttpStatusCode.valueOf(200));
     }
 
     @GetMapping("/{id}")

@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface CameraRepository extends JpaRepository<Camera, Long> {
 
     List<Camera> findByIsActive(boolean isActive);
-    Optional<Camera> findByRtspUrl(String rtspUrl);
+    Optional<Camera> findByUrl(String rtspUrl);
 }
